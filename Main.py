@@ -20,7 +20,7 @@ def createNode(location, path):
     node = {
         'location': location,
         'data': 'P',
-        'path': [path]
+        'path': path
     }
     return node
 
@@ -67,9 +67,10 @@ queue.append(myNode)
 while not isGoal(queue.pop()):
     children = checkForChildren(myNode)
     for child in children:
-        newNode = createNode(int(str(child)[0]), '{}')
-    print(children)
-
+        newNode = createNode((str(child)), '{}, {}'.format(myNode['path'], child))
+    del myNode
+    myNode = newNode
+    queue.append(newNode)
 print(myNode)
 
 print()
