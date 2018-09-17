@@ -2,11 +2,12 @@ from _collections import deque
 
 from subclass.Node import Node
 
-file = open("resources/mymaze.txt", 'r').readlines()
+file = open("resources/maze.txt", 'r').readlines()
 queue = deque([])
 rowSize = 10
 colSize = 10
 mazeArray = ['O'] * colSize
+completedNodes = []
 completePath = []
 
 for i in range(rowSize):
@@ -70,7 +71,7 @@ def getData(id):
 
 
 def checkVisited(node):
-    if node.location in completePath:
+    if node.location in completedNodes:
         return True
     else:
         return False
@@ -78,15 +79,16 @@ def checkVisited(node):
 
 def run():
     nodeid = findEntry()
+    completedNodes.append(nodeid)
     completePath.append(nodeid)
-    node = Node(nodeid, getData(nodeid), completePath)
+    node = Node(nodeid, getData(nodeid), completedNodes)
     queue.append(node)
 
-    if not isGoal(queue.pop()):
+    if not isGoal(queue.popleft()):
         children = checkForChildren(node)
         for child in children:
-            if child not in completePath:
-                completePath.append(child)
+            if child not in completedNodes:
+                completedNodes.append(child)
                 newNode = Node(child, getData(child), completePath, node)
                 queue.append(newNode)
 
@@ -96,40 +98,49 @@ def run():
         currentNode = node
     else:
         currentNode = newNode
+        completePath.append(currentNode.location)
 
     while not isGoal(currentNode):
 
         children = checkForChildren(currentNode)
         index = 0
         for child in children:
-            if child not in completePath:
-                completePath.append(child)
+            if child not in completedNodes:
+                completedNodes.append(child)
                 newNode = Node(child, getData(child), completePath, currentNode)
                 queue.append(newNode)
             else:
                 try:
-                    currentNode = currentNode.siblings.index(index)
+                    if len(children) == 1:
+                        currentNode = currentNode.parent
                 except ValueError:
                     '''do nothing'''
             index += 1
 
-        try:
-            newNode
-        except NameError:
-            currentNode = queue.pop()
-            if currentNode.location not in completePath:
-                completePath.append(currentNode.location)
-        else:
-            if currentNode.location == newNode.location:
-                currentNode = queue.pop()
-                if currentNode.location not in completePath:
-                    completePath.append(currentNode.location)
-            else:
-                currentNode = newNode
-        print(currentNode.location)
+        currentNode = queue.popleft()
+        completePath.append(currentNode.location)
+        # try:
+        #     newNode
+        # except NameError:
+        #     currentNode = queue.pop()
+        #     completePath.append(currentNode.location)
+        #     if currentNode.location not in completedNodes:
+        #         completedNodes.append(currentNode.location)
+        # else:
+        #     if currentNode.location == newNode.location:
+        #         currentNode = queue.pop()
+        #         completePath.append(currentNode.location)
+        #         if currentNode.location not in completedNodes:
+        #             completedNodes.append(currentNode.location)
+        #     else:
+        #         currentNode = queue.pop()
+        #         completePath.append(currentNode.location)
+        print(currentNode.traveledPath)
+        for node in currentNode.path:
+            print(node.location)
 
     print()
-    print(completePath)
+    print(completedNodes)
     print('\033[4mhello\033[0m')
     for row in mazeArray:
         print(' '.join([str(elem) for elem in row]))

@@ -5,6 +5,7 @@ stack = []
 rowSize = 10
 colSize = 10
 mazeArray = ['O'] * colSize
+createdNodes = []
 completePath = []
 
 for i in range(rowSize):
@@ -68,7 +69,7 @@ def getData(id):
 
 
 def checkVisited(node):
-    if node.location in completePath:
+    if node.location in createdNodes:
         return True
     else:
         return False
@@ -76,15 +77,16 @@ def checkVisited(node):
 
 def run():
     nodeid = findEntry()
+    createdNodes.append(nodeid)
     completePath.append(nodeid)
-    node = Node(nodeid, getData(nodeid), completePath)
+    node = Node(nodeid, getData(nodeid), createdNodes)
     stack.append(node)
 
     if not isGoal(stack.pop()):
         children = checkForChildren(node)
         for child in children:
-            if child not in completePath:
-                completePath.append(child)
+            if child not in createdNodes:
+                createdNodes.append(child)
                 newNode = Node(child, getData(child), completePath, node)
                 stack.append(newNode)
 
@@ -100,8 +102,8 @@ def run():
         children = checkForChildren(currentNode)
         index = 0
         for child in children:
-            if child not in completePath:
-                completePath.append(child)
+            if child not in createdNodes:
+                createdNodes.append(child)
                 newNode = Node(child, getData(child), completePath, currentNode)
                 stack.append(newNode)
             else:
@@ -115,19 +117,22 @@ def run():
             newNode
         except NameError:
             currentNode = stack.pop()
-            if currentNode.location not in completePath:
-                completePath.append(currentNode.location)
+            completePath.append(currentNode.location)
+            if currentNode.location not in createdNodes:
+                createdNodes.append(currentNode.location)
         else:
             if currentNode.location == newNode.location:
                 currentNode = stack.pop()
-                if currentNode.location not in completePath:
-                    completePath.append(currentNode.location)
+                completePath.append(currentNode.location)
+                if currentNode.location not in createdNodes:
+                    createdNodes.append(currentNode.location)
             else:
                 currentNode = newNode
-        print(currentNode.location)
+                completePath.append(currentNode.location)
+        print(currentNode.traveledPath)
 
     print()
-    print(completePath)
+    print(createdNodes)
     print('\033[4mhello\033[0m')
     for row in mazeArray:
         print(' '.join([str(elem) for elem in row]))
