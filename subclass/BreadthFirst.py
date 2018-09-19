@@ -97,7 +97,7 @@ def run():
     except NameError:
         currentNode = node
     else:
-        currentNode = newNode
+        currentNode = queue.popleft()
         completePath.append(currentNode.location)
 
     while not isGoal(currentNode):
@@ -135,7 +135,7 @@ def run():
         #     else:
         #         currentNode = queue.pop()
         #         completePath.append(currentNode.location)
-        print(currentNode.traveledPath)
+        print(currentNode.location)
         for node in currentNode.path:
             print(node.location)
 
