@@ -2,10 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fcdba5cb-3b23-4c73-a6f6-9894074ada6f" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/subclass/BreadthFirst.py" beforeDir="false" afterPath="$PROJECT_DIR$/subclass/BreadthFirst.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/subclass/DepthFirst.py" beforeDir="false" afterPath="$PROJECT_DIR$/subclass/DepthFirst.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/subclass/Node.py" beforeDir="false" afterPath="$PROJECT_DIR$/subclass/Node.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -40,8 +37,8 @@
       <file leaf-file-name="BreadthFirst.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/subclass/BreadthFirst.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="319">
-              <caret line="139" column="31" selection-start-line="139" selection-start-column="31" selection-end-line="139" selection-end-column="31" />
+            <state relative-caret-position="-153">
+              <caret line="99" column="37" selection-start-line="99" selection-start-column="37" selection-end-line="99" selection-end-column="37" />
               <folding>
                 <element signature="e#0#30#0" expanded="true" />
               </folding>
@@ -424,8 +421,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/subclass/BreadthFirst.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="319">
-          <caret line="139" column="31" selection-start-line="139" selection-start-column="31" selection-end-line="139" selection-end-column="31" />
+        <state relative-caret-position="-153">
+          <caret line="99" column="37" selection-start-line="99" selection-start-column="37" selection-end-line="99" selection-end-column="37" />
           <folding>
             <element signature="e#0#30#0" expanded="true" />
           </folding>
