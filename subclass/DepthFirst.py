@@ -1,6 +1,6 @@
 from subclass.Node import Node
 
-file = open("resources/maze.txt", 'r').readlines()
+file = open("resources/mymaze.txt", 'r').readlines()
 stack = []
 rowSize = 10
 colSize = 10

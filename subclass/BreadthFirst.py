@@ -2,7 +2,7 @@ from _collections import deque
 
 from subclass.Node import Node
 
-file = open("resources/maze.txt", 'r').readlines()
+file = open("resources/mymaze.txt", 'r').readlines()
 queue = deque([])
 rowSize = 10
 colSize = 10
