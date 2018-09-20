@@ -1,11 +1,11 @@
 from subclass.Node import Node
 
-file = open("resources/mymaze.txt", 'r').readlines()
+file = open("resources/maze.txt", 'r').readlines()
 stack = []
 rowSize = 10
 colSize = 10
 mazeArray = ['O'] * colSize
-createdNodes = []
+completedNodes = []
 completePath = []
 
 for i in range(rowSize):
@@ -69,24 +69,33 @@ def getData(id):
 
 
 def checkVisited(node):
-    if node.location in createdNodes:
+    if node.location in completedNodes:
         return True
     else:
         return False
 
 
+def underline(list, path):
+    for i in range(colSize):
+        for j in range(rowSize):
+            loc = str(i) + str(j)
+            if loc in path:
+                letter = list[i][j]
+                list[i][j] = '\033[4m{}\033[0m'.format(letter)
+
+
 def run():
     nodeid = findEntry()
-    createdNodes.append(nodeid)
+    completedNodes.append(nodeid)
     completePath.append(nodeid)
-    node = Node(nodeid, getData(nodeid), createdNodes)
+    node = Node(nodeid, getData(nodeid), completedNodes)
     stack.append(node)
 
     if not isGoal(stack.pop()):
         children = checkForChildren(node)
         for child in children:
-            if child not in createdNodes:
-                createdNodes.append(child)
+            if child not in completedNodes:
+                completedNodes.append(child)
                 newNode = Node(child, getData(child), completePath, node)
                 stack.append(newNode)
 
@@ -95,45 +104,45 @@ def run():
     except NameError:
         currentNode = node
     else:
-        currentNode = newNode
+        currentNode = stack.pop()
+        completePath.append(currentNode.location)
 
     while not isGoal(currentNode):
 
         children = checkForChildren(currentNode)
         index = 0
         for child in children:
-            if child not in createdNodes:
-                createdNodes.append(child)
+            if child not in completedNodes:
+                completedNodes.append(child)
                 newNode = Node(child, getData(child), completePath, currentNode)
                 stack.append(newNode)
             else:
                 try:
-                    currentNode = currentNode.siblings.index(index)
+                    if len(children) == 1:
+                        currentNode = currentNode.parent
                 except ValueError:
                     '''do nothing'''
             index += 1
 
         try:
-            newNode
-        except NameError:
             currentNode = stack.pop()
             completePath.append(currentNode.location)
-            if currentNode.location not in createdNodes:
-                createdNodes.append(currentNode.location)
-        else:
-            if currentNode.location == newNode.location:
-                currentNode = stack.pop()
-                completePath.append(currentNode.location)
-                if currentNode.location not in createdNodes:
-                    createdNodes.append(currentNode.location)
-            else:
-                currentNode = newNode
-                completePath.append(currentNode.location)
-        print(currentNode.traveledPath)
+        except IndexError:
+            print('There is not a valid path.')
+            return
 
-    print()
-    print(createdNodes)
-    print('\033[4mhello\033[0m')
+        # for node in currentNode.path:
+        #     print(node.location)
+
+    finalPath = []
+
+    for myNode in currentNode.path:
+        finalPath.append(myNode.location)
+
+    underline(mazeArray, finalPath)
+
     for row in mazeArray:
         print(' '.join([str(elem) for elem in row]))
 
+    print()
+    print(finalPath)

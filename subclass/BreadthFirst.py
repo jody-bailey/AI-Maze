@@ -20,15 +20,6 @@ for i in range(rowSize):
         index += 1
 
 
-def createNode(location, path):
-    node = {
-        'location': location,
-        'data': 'P',
-        'path': path
-    }
-    return node
-
-
 def findEntry():
     for i in range(colSize):
         for j in range(rowSize):
@@ -77,6 +68,15 @@ def checkVisited(node):
         return False
 
 
+def underline(list, path):
+    for i in range(colSize):
+        for j in range(rowSize):
+            loc = str(i) + str(j)
+            if loc in path:
+                letter = list[i][j]
+                list[i][j] = '\033[4m{}\033[0m'.format(letter)
+
+
 def run():
     nodeid = findEntry()
     completedNodes.append(nodeid)
@@ -117,31 +117,25 @@ def run():
                     '''do nothing'''
             index += 1
 
-        currentNode = queue.popleft()
-        completePath.append(currentNode.location)
-        # try:
-        #     newNode
-        # except NameError:
-        #     currentNode = queue.pop()
-        #     completePath.append(currentNode.location)
-        #     if currentNode.location not in completedNodes:
-        #         completedNodes.append(currentNode.location)
-        # else:
-        #     if currentNode.location == newNode.location:
-        #         currentNode = queue.pop()
-        #         completePath.append(currentNode.location)
-        #         if currentNode.location not in completedNodes:
-        #             completedNodes.append(currentNode.location)
-        #     else:
-        #         currentNode = queue.pop()
-        #         completePath.append(currentNode.location)
-        print(currentNode.location)
-        for node in currentNode.path:
-            print(node.location)
+        try:
+            currentNode = queue.popleft()
+            completePath.append(currentNode.location)
+        except IndexError:
+            print('There is not a valid path.')
+            return
 
-    print()
-    print(completedNodes)
-    print('\033[4mhello\033[0m')
+        # for node in currentNode.path:
+        #     print(node.location)
+
+    finalPath = []
+
+    for myNode in currentNode.path:
+        finalPath.append(myNode.location)
+
+    underline(mazeArray, finalPath)
+
     for row in mazeArray:
         print(' '.join([str(elem) for elem in row]))
 
+    print()
+    print(finalPath)
