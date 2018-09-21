@@ -12,11 +12,11 @@ class BreadthSearch:
         self.completedNodes = []
         self.completePath = []
 
-        self.file = open("resources/maze1.txt", 'r').readlines()
         self.queue = deque([])
 
         self.mazeArray = maze
         if len(self.mazeArray) == 0:
+            self.file = open("resources/maze1.txt", 'r').readlines()
             self.mazeArray = ['O'] * self.colSize
             self.completedNodes = []
             self.completePath = []

@@ -7,7 +7,7 @@ class DepthSearch:
 
         if maze is None:
             maze = []
-        self.file = open("resources/maze1.txt", 'r').readlines()
+
         self.stack = []
         self.rowSize = 10
         self.colSize = 10
@@ -16,6 +16,7 @@ class DepthSearch:
 
         self.mazeArray = maze
         if len(self.mazeArray) == 0:
+            self.file = open("resources/maze1.txt", 'r').readlines()
             self.mazeArray = ['O'] * self.colSize
             self.completedNodes = []
             self.completePath = []

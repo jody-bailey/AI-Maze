@@ -1,3 +1,4 @@
+# from subclass.BreadthFirst import BreadthSearch
 from subclass.BreadthFirst import BreadthSearch
 from subclass.DepthFirst import DepthSearch
 from generator.Main import Main
@@ -26,9 +27,12 @@ class MainProgram:
         search2 = DepthSearch(self.maze2)
         search2.run()
 
+    def main(self):
+        self.breadthFirst()
+        print()
+        self.depthFirst()
+
 
 program = MainProgram()
 
-program.breadthFirst()
-print()
-program.depthFirst()
+program.main()
